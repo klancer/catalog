@@ -1,0 +1,8 @@
+## change
+%s/restaurant/store/g
+%s/Restaurant/Store/g
+%s/course/product/g
+Appetizer/Computer
+Entree/Mobile
+Dessert/Network
+Beverage/Accessory
