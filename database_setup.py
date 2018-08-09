@@ -22,6 +22,7 @@ class Store(Base):
     name = Column(String(250), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    menu_item = relationship('MenuItem', cascade='all, delete-orphan')
 
     @property
     def serialize(self):

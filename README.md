@@ -20,10 +20,12 @@ This program uses third-party auth with Google. Some of the technologies used to
 - OAuth2
 - Google Login
 
+
 ## Some things you might need
-- [Vagrant](https://www.vagrantup.com/)
-- [Udacity Vagrantfile](https://github.com/udacity/fullstack-nanodegree-vm)
+- Ensure that Python, the python package psycopg2, Vagrant, and VirtualBox are installed. [Vagrantfile link](https://github.com/udacity/fullstack-nanodegree-vm/blob/master/vagrant/Vagrantfile) is here.
+- Download or clone the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm) repository.
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
 
 ## Getting Started
 - Install Vagrant and VirtualBox

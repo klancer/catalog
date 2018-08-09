@@ -24,8 +24,6 @@ APPLICATION_NAME = "Store Menu Application"
 engine = create_engine('sqlite:///storemenuwithusers.db')
 Base.metadata.bind = engine
 
-# DBSession = sessionmaker(bind=engine)
-# session = DBSession()
 session = scoped_session(sessionmaker(bind=engine))
 
 
@@ -35,7 +33,6 @@ def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
-    # return "The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
 
 
@@ -235,7 +232,7 @@ def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except error:
+    except:  # noqa
         return None
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
