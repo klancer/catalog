@@ -39,7 +39,7 @@ This program uses third-party auth with Google. Some of the technologies used to
 - *if first time running, you must add a category before adding an item
 
 ## Known issues
-- No validation on forms
+- limited validation on forms
 
 ## Possible improvements
 - Add an additional data model so that users can add Stores

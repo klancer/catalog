@@ -1,6 +1,7 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
+
 	<div class="row divider blue">
 		<div class="col-md-12"></div>
 	</div>
@@ -9,12 +10,25 @@
 			<h1>New Store</h1>
 		</div>
 	</div>
+<div class = 'flash'>
+                      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-1 padding-top">
 			<form action="#" method = "post">
 				<div class="form-group">
 				<label for="name">Name:</label>
-				<input type ="text" class="form-control" maxlength="100" name="name">
+				<input type ="text" class="form-control" maxlength="100" name="name" pattern="[A-Za-z0-9\s]+" required>
 				<div class="padding-bottom"></div>
 				<button type="submit" class="btn btn-default" id="submit" type="submit">
 				<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>Create</button>

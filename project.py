@@ -1,5 +1,12 @@
-from flask import Flask, render_template,\
- request, redirect, jsonify, url_for, flash
+from flask import (
+     Flask,
+     render_template,
+     request,
+     redirect,
+     jsonify,
+     url_for,
+     flash
+)
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import scoped_session, sessionmaker
 from database_setup import Base, Store, MenuItem, User
@@ -302,13 +309,18 @@ def newStore():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newStore = Store(
-            name=request.form['name'], user_id=login_session['user_id'])
-        session.add(newStore)
-        session.commit()
-        flash('New Store %s Successfully Created' % newStore.name)
-#        session.commit()
-        return redirect(url_for('showStores'))
+        name1 = request.form['name']
+        if name1 == " ":
+            flash("Name field cannot be empty")
+            return render_template('newStore.html')
+        else:
+            newStore = Store(
+                   name=request.form['name'],
+                   user_id=login_session['user_id'])
+            session.add(newStore)
+            session.commit()
+            flash('New Store %s Successfully Created' % newStore.name)
+            return redirect(url_for('showStores'))
     else:
         return render_template('newStore.html')
 
@@ -317,10 +329,9 @@ def newStore():
 
 @app.route('/store/<int:store_id>/edit/', methods=['GET', 'POST'])
 def editStore(store_id):
-    editedStore = session.query(Store).\
-                  filter_by(id=store_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    editedStore = session.query(Store).filter_by(id=store_id).one()
     if editedStore.user_id != login_session['user_id']:
         return "<script>function myFunction(){alert('You are not \
                 authorized to edit this store. Please create your \
@@ -342,10 +353,10 @@ def editStore(store_id):
 
 @app.route('/store/<int:store_id>/delete/', methods=['GET', 'POST'])
 def deleteStore(store_id):
-    storeToDelete = session.query(
-        Store).filter_by(id=store_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    storeToDelete = session.query(
+        Store).filter_by(id=store_id).one()
     if storeToDelete.user_id != login_session['user_id']:
         return "<script>function myFunction(){alert('You are not \
                 authorized to delete this store. Please create your \
