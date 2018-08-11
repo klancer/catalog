@@ -19,7 +19,6 @@ import httplib2
 import json
 from flask import make_response
 import requests
-import re
 
 app = Flask(__name__)
 
@@ -274,8 +273,7 @@ def gdisconnect():
 # JSON APIs to view Store Information
 @app.route('/store/<int:store_id>/menu/JSON')
 def storeMenuJSON(store_id):
-    store_id1 = str(store_id)
-    if not re.match(r"\d+", store_id1):
+    if not re.match(r"\d+", str(store_id)):
         response = make_response(json.dumps('store_id incorect'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -288,8 +286,7 @@ def storeMenuJSON(store_id):
 
 @app.route('/store/<int:store_id>/menu/<int:menu_id>/JSON')
 def menuItemJSON(store_id, menu_id):
-    store_id1 = str(store_id)
-    if not re.match(r"\d+", store_id1):
+    if not re.match(r"\d+", str(store_id)):
         response = make_response(json.dumps('store_id incorect'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -321,14 +318,14 @@ def showStores():
 def newStore():
     if 'username' not in login_session:
         return redirect('/login')
-        if request.method == 'POST':
-            newStore = Store(
-                   name=request.form['name'],
-                   user_id=login_session['user_id'])
-            session.add(newStore)
-            session.commit()
-            flash('New Store %s Successfully Created' % newStore.name)
-            return redirect(url_for('showStores'))
+    if request.method == 'POST':
+        newStore = Store(
+                         name=request.form['name'],
+                         user_id=login_session['user_id'])
+        session.add(newStore)
+        session.commit()
+        flash('New Store %s Successfully Created' % newStore.name)
+        return redirect(url_for('showStores'))
     else:
         return render_template('newStore.html')
 
@@ -343,20 +340,14 @@ def editStore(store_id):
     if editedStore.user_id != login_session['user_id']:
         return "<script>function myFunction(){alert('You are not \
                 authorized to edit this store. Please create your \
-                own store in order to edit.');}</script>\
-                <body onload='myFunction()'>"
+                own store in order to edit.');}</script><body \
+                onload='myFunction()'>"
     if request.method == 'POST':
-        if request.form['name']:
-            name1 = request.form['name']
-            if name1 == ' ':
-                flash("Name field cannot be empty")
-                return redirect(url_for('showStores'))
-            else:
-                editedStore.name = request.form['name']
-                session.add(editedStore)
-                session.commit()
-                flash('Store Successfully Edited %s' % editedStore.name)
-            return redirect(url_for('showStores'))
+        editedStore.name = request.form['name']
+        session.add(editedStore)
+        session.commit()
+        flash('Store Successfully Edited %s' % editedStore.name)
+        return redirect(url_for('showStores'))
     else:
         return render_template('editStore.html', store=editedStore)
 
@@ -440,9 +431,9 @@ def editMenuItem(store_id, menu_id):
     store = session.query(Store).filter_by(id=store_id).one()
     if login_session['user_id'] != store.user_id:
         return "<script>function myFunction() {alert ('You are not \
-                authorized to edit menu items to this store. Please \
-                create your own store in order to \
-                edit items.');}</script><body onload = 'myFunction()'>"
+                  authorized to edit menu items to this store. Please \
+                  create your own store in order to \
+                  edit items.');}</script><body onload = 'myFunction()'>"
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
