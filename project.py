@@ -19,6 +19,7 @@ import httplib2
 import json
 from flask import make_response
 import requests
+import re
 
 app = Flask(__name__)
 
@@ -265,7 +266,7 @@ def gdisconnect():
         return response
     else:
         response = make_response(json.dumps('Failed to revoke \
-                   token for given user.', 400))
+                   token for given user.'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -273,16 +274,28 @@ def gdisconnect():
 # JSON APIs to view Store Information
 @app.route('/store/<int:store_id>/menu/JSON')
 def storeMenuJSON(store_id):
-    store = session.query(Store).filter_by(id=store_id).one()
-    items = session.query(MenuItem).filter_by(
-        store_id=store_id).all()
-    return jsonify(MenuItems=[i.serialize for i in items])
+    store_id1 = str(store_id)
+    if not re.match(r"\d+", store_id1):
+        response = make_response(json.dumps('store_id incorect'), 400)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        store = session.query(Store).filter_by(id=store_id).one()
+        items = session.query(MenuItem).filter_by(
+            store_id=store_id).all()
+        return jsonify(MenuItems=[i.serialize for i in items])
 
 
 @app.route('/store/<int:store_id>/menu/<int:menu_id>/JSON')
 def menuItemJSON(store_id, menu_id):
-    Menu_Item = session.query(MenuItem).filter_by(id=menu_id).one()
-    return jsonify(Menu_Item=Menu_Item.serialize)
+    store_id1 = str(store_id)
+    if not re.match(r"\d+", store_id1):
+        response = make_response(json.dumps('store_id incorect'), 400)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        Menu_Item = session.query(MenuItem).filter_by(id=menu_id).one()
+        return jsonify(Menu_Item=Menu_Item.serialize)
 
 
 @app.route('/store/JSON')
@@ -308,12 +321,7 @@ def showStores():
 def newStore():
     if 'username' not in login_session:
         return redirect('/login')
-    if request.method == 'POST':
-        name1 = request.form['name']
-        if name1 == " ":
-            flash("Name field cannot be empty")
-            return render_template('newStore.html')
-        else:
+        if request.method == 'POST':
             newStore = Store(
                    name=request.form['name'],
                    user_id=login_session['user_id'])
@@ -339,11 +347,15 @@ def editStore(store_id):
                 <body onload='myFunction()'>"
     if request.method == 'POST':
         if request.form['name']:
-            editedStore.name = request.form['name']
-            session.add(editedStore)
-            session.commit()
-            flash('Store Successfully Edited %s' % editedStore.name)
-#            session.commit()
+            name1 = request.form['name']
+            if name1 == ' ':
+                flash("Name field cannot be empty")
+                return redirect(url_for('showStores'))
+            else:
+                editedStore.name = request.form['name']
+                session.add(editedStore)
+                session.commit()
+                flash('Store Successfully Edited %s' % editedStore.name)
             return redirect(url_for('showStores'))
     else:
         return render_template('editStore.html', store=editedStore)
@@ -366,7 +378,6 @@ def deleteStore(store_id):
         session.delete(storeToDelete)
         session.commit()
         flash('%s Successfully Deleted' % storeToDelete.name)
-#        session.commit()
         return redirect(url_for('showStores', store_id=store_id))
     else:
         return render_template('deleteStore.html', store=storeToDelete)
@@ -416,7 +427,6 @@ def newMenuItem(store_id):
     else:
         return render_template('newmenuitem.html', store_id=store_id)
     return render_template('newmenuitem.html', store_id=store)
-#    return render_template('newMenuItem.html', store=store)
 
 # Edit a menu item
 

@@ -25,7 +25,7 @@ This program uses third-party auth with Google. Some of the technologies used to
 - Ensure that Python, the python package psycopg2, Vagrant, and VirtualBox are installed. [Vagrantfile link](https://github.com/udacity/fullstack-nanodegree-vm/blob/master/vagrant/Vagrantfile) is here.
 - Download or clone the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm) repository.
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-
+- Vagrantfile is included in github repository in case Vagrantfile link is not working.
 
 ## Getting Started
 - Install Vagrant and VirtualBox

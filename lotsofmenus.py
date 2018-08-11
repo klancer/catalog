@@ -37,7 +37,7 @@ menuItem2 = MenuItem(user_id=1,
                      description="Small 15-inch laptop packs powerhouse \
                      performance and a stunning InfinityEdge display \
                      with an optional touch screen",
-                     price="$1000.50",
+                     price="1000.50",
                      product="Computer",
                      store=store1)
 
@@ -52,7 +52,7 @@ menuItem1 = MenuItem(user_id=1,
                      and closing apps, TouchWiz interface is refined again, \
                      and is much slicker, MicroSD slot is back for \
                      expanded memory",
-                     price="$600.00",
+                     price="600.00",
                      product="Mobile",
                      store=store1)
 
@@ -62,7 +62,7 @@ session.commit()
 menuItem2 = MenuItem(user_id=1,
                      name="Netgear router",
                      description="Netgear NightHawk router",
-                     price="$200",
+                     price="200",
                      product="Network",
                      store=store1)
 
@@ -74,7 +74,7 @@ menuItem3 = MenuItem(user_id=1,
                      description="Durable Charging Cable, with Aramid \
                      Fiber and 5000+ Bend Lifespan for Samsung, Nexus, \
                      LG, Motorola, Android Smartphones and More",
-                     price="$25.00",
+                     price="25.00",
                      product="Accessory",
                      store=store1)
 
@@ -89,7 +89,7 @@ menuItem4 = MenuItem(user_id=1,
                      name="TP-Link Router AC1750",
                      description="TP-Link AC1750 Smart WiFi Router - \
                      Dual Band.",
-                     price="$40.00",
+                     price="40.00",
                      product="Network",
                      store=store2)
 session.add(menuItem4)

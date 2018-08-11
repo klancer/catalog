@@ -14,7 +14,7 @@
 			<form action="#" method = "post">
 				<div class="form-group">
 					<label for="name">Name:</label>
-					<input type ="text" maxlength="50" class="form-control" name="name"placeholder="Name of the product">
+					<input type ="text" maxlength="50" class="form-control" name="name" placeholder="Name of the product" pattern="^\w+[\w\s]+$" required>
 
 					<label for="description">Description:</label>
 					<textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="Description of the product"></textarea>
@@ -22,7 +22,7 @@
 					<label for="price">Price:</label>
 					<div class="input-group">
 						<div class="input-group-addon">$</div>
-						<input type ="text" class="form-control" maxlength="10" name="price" placeholder="Price in $">
+						<input type ="text" class="form-control" maxlength="10" name="price" placeholder="Price in $" pattern="^[0-9]?[,0-9]+(?:\.\d{2})?$" required>
 					</div>
 					<label for="product">Product:</label>
 					<div class="radio">

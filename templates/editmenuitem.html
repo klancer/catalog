@@ -14,7 +14,7 @@
 			<form action="#" method = "post">
 				<div class="form-group">
 					<label for="name">Name:</label>
-					<input type ="text" maxlength="100" class="form-control" name="name" value="{{item.name }}">
+					<input type ="text" maxlength="100" class="form-control" name="name" value="{{item.name }}" pattern="^\w+[\w\s]+$" required>
 
 					<label for="description">Description:</label>
 					<textarea class="form-control" maxlength="250" rows="3" name="description">{{item.description}}</textarea>
@@ -22,7 +22,7 @@
 					<label for="price">Price:</label>
 					<div class="input-group">
 						<div class="input-group-addon">$</div>
-						<input type ="text" maxlength="10" class="form-control" name="price" value="{{item.price}}">
+						<input type ="text" maxlength="10" class="form-control" name="price" value="{{item.price}}" pattern="^[0-9]?[,0-9]+(?:\.\d{2})?$" required>
 					</div>
 					<label for="product">Product:</label>
 					<div class="radio">
